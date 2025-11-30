@@ -1,8 +1,12 @@
+import os
 import requests
 from typing import List, Dict, Any, Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Success(JSONResponse):
     def __init__(
@@ -53,7 +57,7 @@ def read_local_txt_file(file_path):
 
 
 def call_bailian_model(prompt: str, 
-                      api_key: str = "sk-42b0ec0e9639427bb97c4f1c5f4e6c18",
+                      api_key: str = os.getenv("DASHSCOPE_KEY"),
                       model: str = "qwen-turbo") -> str:
     
     context = read_local_txt_file("todo.txt")
