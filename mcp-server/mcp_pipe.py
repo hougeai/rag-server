@@ -74,10 +74,10 @@ async def connect_to_server(uri, target):
             cmd, env = build_server_command(target)
             process = subprocess.Popen(
                 cmd,
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                encoding='utf-8',
+                stdin=subprocess.PIPE,  # 创建管道连接到子进程的标准输入，允许父进程向子进程发送数据
+                stdout=subprocess.PIPE, # 创建管道连接到子进程的标准输出，允许父进程读取子进程的输出数据
+                stderr=subprocess.PIPE, # 创建管道连接到子进程的标准错误输出，允许父进程读取子进程的错误信息
+                encoding='utf-8',       # 设置编码格式为utf-8
                 text=True,
                 env=env
             )
@@ -132,7 +132,7 @@ async def pipe_process_to_websocket(process, websocket, target):
     try:
         while True:
             # Read data from process stdout
-            data = await asyncio.to_thread(process.stdout.readline)
+            data = await asyncio.to_thread(process.stdout.readline) # readline会阻塞，直到有数据可读或者进程结束，只有当流真正关闭时才会返回空字符串；使用 asyncio.to_thread 避免阻塞事件循环
             
             if not data:  # If no data, the process may have ended
                 logger.info(f"[{target}] Process has ended output")
