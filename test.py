@@ -1,5 +1,6 @@
 import requests
 import json
+from core.utils import call_bailian_model
 
 def test_single_query(query):
     """
@@ -33,7 +34,6 @@ def test_single_query(query):
         return None
 
 if __name__ == "__main__":
-    # 或者测试单个问题
-    print("\n" + "="*50)
-    print("单个查询测试:")
-    test_single_query("API聚合平台的介绍")
+    # test_single_query("API聚合平台的介绍")
+    result = call_bailian_model("API聚合平台的介绍")
+    print(result)

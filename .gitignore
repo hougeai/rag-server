@@ -10,5 +10,4 @@ wheels/
 .venv
 1.py
 log.txt
-todo.txt
 .env
